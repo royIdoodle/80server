@@ -1,11 +1,12 @@
 let config = require('../config/mongo_config');
 const mongoose = require('mongoose');
-const {path, account} = config;
-mongoose.connect(`${path}${account}`);
+const {path, dbAccount} = config;
+mongoose.connect(`${path}${dbAccount}`);
 
+
+const Shop = mongoose.model('account', { name: String , createTime: Date});
 
 function saveShop() {
-    const Shop = mongoose.model('Shop', { name: String });
 
     const shop80s = new Shop({ name: '80s' , createTime: Date.now()});
     shop80s.save()
@@ -15,6 +16,16 @@ function saveShop() {
         });
 }
 
+function findShop(){
+    return Shop.find().where({name: '80s'}).exec().then((results) => {
+        console.log('===============');
+        console.log(results);
+        console.log('===============');
+        return results;
+    })
+}
+
 module.exports = {
-    save: saveShop
+    save: saveShop,
+    find: findShop
 };

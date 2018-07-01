@@ -1,5 +1,5 @@
 const path = 'mongodb://localhost/';
-const dbAccount = 'account';
+const dbAccount = 'meifa';
 
 module.exports = {
     path,

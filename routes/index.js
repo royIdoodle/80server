@@ -10,10 +10,18 @@ router.get('/', function(req, res, next) {
 
 router.get('/test', function(req, res, next) {
     res.send('sdsa')
-})
+});
 
 router.get('/save', function (req, res, next) {
     account.save();
     res.send('saved')
-})
+});
+
+router.get('/find', function (req, res, next) {
+    account.find().then(result => {
+        res.send(result)
+    });
+
+});
+
 module.exports = router;
