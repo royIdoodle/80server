@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-// import account from '../service/account'
-let account = require('../service/account')
+let account = require('../service/account'),
+    member = require('../service/member');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -22,6 +22,12 @@ router.get('/find', function (req, res, next) {
         res.send(result)
     });
 
+});
+
+router.post('/member/add', (req, res, next) => {
+    member.add(req.query).then(result => {
+        res.send(result);
+    })
 });
 
 module.exports = router;
