@@ -9,25 +9,24 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.get('/test', function(req, res, next) {
-    res.send('sdsa')
-});
 
 router.get('/save', function (req, res, next) {
-    account.save();
-    res.send('saved')
+    account.save().then(() => {
+        res.send(mb.success('saved'));
+    });
+
 });
 
 router.get('/find', function (req, res, next) {
     account.find().then(result => {
-        res.send(result)
+        res.send(mb.success(result));
     });
 
 });
 
 router.post('/member/add', (req, res, next) => {
     member.add(req.query).then(result => {
-        res.send(result);
+        res.send(mb.success(result));
     })
 });
 
@@ -35,7 +34,7 @@ router.post('/member/add', (req, res, next) => {
 router.get('/member/list/:page/:count', (req, res, next) => {
     // mem
     member.list(req.params).then(list => {
-        res.send(list);
+        res.send(mb.success(list));
     });
 });
 
@@ -43,9 +42,9 @@ router.get('/member/list/:page/:count', (req, res, next) => {
 router.post('/member/remove', (req, res, next) => {
     const {phone} = req.query;
     member.remove({phone}).then(list => {
-        res.send(list);
+        res.send(mb.success(list));
     }).catch(err => {
-        res.send(err);
+        res.send(mb.error(err));
     })
 });
 
@@ -53,18 +52,18 @@ router.post('/member/remove', (req, res, next) => {
 router.post('/member/edit/:phone', (req, res, next) => {
     const {phone} = req.params;
     member.edit(phone, req.query).then(result => {
-        res.send(result);
+        res.send(mb.success(result));
     }).catch(err => {
-        res.send(err);
+        res.send(mb.error(err));
     })
 });
 
 router.get('/member/get/:id', (req, res, next) => {
     const {id} = req.params;
     member.find(id).then(info => {
-        res.send(info);
+        res.send(mb.success(info));
     }).catch(err => {
-        res.send(err);
+        res.send(mb.error(err));
     })
 });
 

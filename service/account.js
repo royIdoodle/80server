@@ -9,11 +9,7 @@ const Shop = mongoose.model('account', { name: String , createTime: Date});
 function saveShop() {
 
     const shop80s = new Shop({ name: '80s' , createTime: Date.now()});
-    shop80s.save()
-        .then((a) => console.log(a))
-        .catch(e => {
-            console.log(e)
-        });
+    return shop80s.save();
 }
 
 function findShop(){
