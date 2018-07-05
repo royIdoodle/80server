@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 let account = require('../service/account'),
     member = require('../service/member');
+let mb = require('../lib/messageBox');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
