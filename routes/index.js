@@ -30,4 +30,41 @@ router.post('/member/add', (req, res, next) => {
     })
 });
 
+//获取会员列表
+router.get('/member/list/:page/:count', (req, res, next) => {
+    // mem
+    member.list(req.params).then(list => {
+        res.send(list);
+    });
+});
+
+// 删除指定会员
+router.post('/member/remove', (req, res, next) => {
+    const {phone} = req.query;
+    member.remove({phone}).then(list => {
+        res.send(list);
+    }).catch(err => {
+        res.send(err);
+    })
+});
+
+// 修改指定会员信息
+router.post('/member/edit/:phone', (req, res, next) => {
+    const {phone} = req.params;
+    member.edit(phone, req.query).then(result => {
+        res.send(result);
+    }).catch(err => {
+        res.send(err);
+    })
+});
+
+router.get('/member/get/:id', (req, res, next) => {
+    const {id} = req.params;
+    member.find(id).then(info => {
+        res.send(info);
+    }).catch(err => {
+        res.send(err);
+    })
+});
+
 module.exports = router;
