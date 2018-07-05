@@ -27,6 +27,8 @@ router.get('/find', function (req, res, next) {
 router.post('/member/add', (req, res, next) => {
     member.add(req.query).then(result => {
         res.send(mb.success(result));
+    }).catch(err => {
+        res.send(mb.error(err));
     })
 });
 

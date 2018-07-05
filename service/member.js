@@ -39,10 +39,18 @@ const Member = mongoose.model('member', Model);
  */
 function addMember(info = {}){
     info.createTime = Date.now();
-    const thisMember = new Member(info);
-    //TODO 电话号码重复性校验
-
-    return thisMember.save();
+    if(!info.phone){
+        throw ('没有电话号 phone');
+    }else{
+        return Member.findOne({phone: info.phone}).then(result => {
+            if(result){
+                throw '电话号码已存在！'
+            }else{
+                const thisMember = new Member(info);
+                return thisMember.save();
+            }
+        })
+    }
 }
 
 /**
