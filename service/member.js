@@ -73,17 +73,17 @@ function editMember(phone, query) {
 
 
 function findMember(id) {
-    console.log(id)
     return Member.findOne({'_id': mongoose.Types.ObjectId(id)});
 }
 
 /**
  * 获取会员列表
- * @param startNum
- * @param pageCount
+ * @param page
+ * @param count
  */
-function getMemberList({startNum, pageCount}) {
-    return Member.find();
+function getMemberList({page = 0, count = 10}) {
+    const skipCount = page * count;
+    return Member.find().skip(skipCount).limit(Number(count));
 }
 
 module.exports = {

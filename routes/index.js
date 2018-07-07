@@ -34,10 +34,11 @@ router.post('/member/add', (req, res, next) => {
 
 //获取会员列表
 router.get('/member/list/:page/:count', (req, res, next) => {
-    // mem
     member.list(req.params).then(list => {
         res.send(mb.success(list));
-    });
+    }).catch(err => {
+        res.send(mb.error(err));
+    })
 });
 
 // 删除指定会员
