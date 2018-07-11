@@ -28,6 +28,10 @@ const Model = {
         type: Number,
         default: 0
     },
+    balance: {
+        type: Number,
+        default: 0
+    },
     consumeIdList: Array,   //消费明细ID列表
 };
 
@@ -37,15 +41,15 @@ const Member = mongoose.model('member', Model);
  * 添加会员
  * @param info
  */
-function addMember(info = {}){
+function addMember(info = {}) {
     info.createTime = Date.now();
-    if(!info.phone){
+    if (!info.phone) {
         throw ('没有电话号 phone');
-    }else{
+    } else {
         return Member.findOne({phone: info.phone}).then(result => {
-            if(result){
+            if (result) {
                 throw '电话号码已存在！'
-            }else{
+            } else {
                 const thisMember = new Member(info);
                 return thisMember.save();
             }
