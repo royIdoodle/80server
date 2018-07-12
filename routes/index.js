@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 let account = require('../service/account'),
-    member = require('../service/member');
+    member = require('../service/member'),
+    consume = require('../service/consume');
 let mb = require('../lib/messageBox');
 
 /* GET home page. */
@@ -64,6 +65,26 @@ router.post('/member/edit/:phone', (req, res, next) => {
 router.get('/member/get/:id', (req, res, next) => {
     const {id} = req.params;
     member.find(id).then(info => {
+        res.send(mb.success(info));
+    }).catch(err => {
+        res.send(mb.error(err));
+    })
+});
+
+router.post('/member/recharge/:id', (req, res) => {
+    const {id} = req.params,
+        {number} = req.query;
+    member.recharge({id, number}).then(info => {
+        res.send(mb.success(info));
+    }).catch(err => {
+        res.send(mb.error(err));
+    })
+});
+
+router.post('/consume/add/:shopId/:memberId', (req, res) => {
+    const {shopId, memberId} = req.params;
+    const {type, count} = req.query;
+    consume.add({shopId, memberId, type, count}).then(info => {
         res.send(mb.success(info));
     }).catch(err => {
         res.send(mb.error(err));

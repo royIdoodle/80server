@@ -90,10 +90,25 @@ function getMemberList({page = 0, count = 10}) {
     return Member.find().skip(skipCount).limit(Number(count));
 }
 
+/**
+ * 给用户充值
+ * @param id
+ * @param number
+ * @param type
+ * @returns {void|Query}
+ */
+function recharge({id, number, type = 'balance'}) {
+    if(type === 'balance') {
+        //更新余额
+        return Member.findOneAndUpdate({_id: id}, { $inc: {balance: Math.abs(number)}})
+    }
+}
+
 module.exports = {
     add: addMember,
     remove: deleteMember,
     edit: editMember,
     find: findMember,
-    list: getMemberList
+    list: getMemberList,
+    recharge: recharge
 };
