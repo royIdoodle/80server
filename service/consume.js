@@ -33,6 +33,13 @@ const Model = {
 
 const Consume = mongoose.model('consume', Model);
 
+const TYPE = {
+    HAIR_CUT: 'haircut',
+    PERM: 'perm',
+    SHOPPING: 'shopping',
+    RECHARGE: 'recharge'
+};
+
 /**
  * 增加一个消费记录
  * @param memberId
@@ -45,6 +52,12 @@ function addConsume({memberId, shopId, type, count}) {
     return thisConsume.save();
 }
 
+function getConsumeList({memberId}) {
+    return Consume.find({memberId})
+}
+
 module.exports = {
-    add: addConsume
+    TYPE,
+    add: addConsume,
+    list: getConsumeList
 };

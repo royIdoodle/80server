@@ -1,6 +1,7 @@
 let config = require('../config/mongo_config');
 const mongoose = require('mongoose');
 const {path, dbAccount} = config;
+const ConsumeService = require('./consume');
 mongoose.connect(`${path}${dbAccount}`);
 
 const Model = {
@@ -94,13 +95,20 @@ function getMemberList({page = 0, count = 10}) {
  * 给用户充值
  * @param id
  * @param number
+ * @param shopId
  * @param type
  * @returns {void|Query}
  */
-function recharge({id, number, type = 'balance'}) {
+function recharge({id, number, shopId, type = 'balance'}) {
     if(type === 'balance') {
         //更新余额
-        return Member.findOneAndUpdate({_id: id}, { $inc: {balance: Math.abs(number)}})
+        return Member.findOneAndUpdate({_id: id}, { $inc: {balance: Math.abs(number)}}).then(() => {
+            //添加一个交易记录
+            return ConsumeService.add({
+                memberId: id, shopId, count: number,
+                type: ConsumeService.TYPE.RECHARGE
+            })
+        })
     }
 }
 

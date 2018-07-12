@@ -73,8 +73,8 @@ router.get('/member/get/:id', (req, res, next) => {
 
 router.post('/member/recharge/:id', (req, res) => {
     const {id} = req.params,
-        {number} = req.query;
-    member.recharge({id, number}).then(info => {
+        {number, shopId = 1} = req.query;
+    member.recharge({id, number, shopId}).then(info => {
         res.send(mb.success(info));
     }).catch(err => {
         res.send(mb.error(err));
@@ -89,6 +89,15 @@ router.post('/consume/add/:shopId/:memberId', (req, res) => {
     }).catch(err => {
         res.send(mb.error(err));
     })
+});
+
+router.get('/consume/list/:memberId', (req, res) => {
+   const {memberId} = req.params;
+   consume.list({memberId}).then(info => {
+       res.send(mb.success(info));
+   }).catch(err => {
+       res.send(mb.error(err));
+   })
 });
 
 module.exports = router;
