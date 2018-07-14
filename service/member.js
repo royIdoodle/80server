@@ -64,12 +64,12 @@ function deleteMember(query) {
 
 /**
  * 修改会员信息
- * @param phone
+ * @param id
  * @param query
  * @returns {Query}
  */
-function editMember(phone, query) {
-    return Member.updateOne({phone}, query);
+function editMember(id, query) {
+    return Member.updateOne({_id: id}, query);
 }
 
 

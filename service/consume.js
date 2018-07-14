@@ -59,7 +59,7 @@ function addConsume({memberId, shopId, type, count}) {
 }
 
 function getConsumeList({memberId}) {
-    return Consume.find({memberId})
+    return Consume.find({memberId}).sort({time: -1})
 }
 
 module.exports = {

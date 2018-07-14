@@ -53,9 +53,9 @@ router.post('/member/remove', (req, res, next) => {
 });
 
 // 修改指定会员信息
-router.post('/member/edit/:phone', (req, res, next) => {
-    const {phone} = req.params;
-    member.edit(phone, req.query).then(result => {
+router.post('/member/edit/:id', (req, res, next) => {
+    const {id} = req.params;
+    member.edit(id, req.query).then(result => {
         res.send(mb.success(result));
     }).catch(err => {
         res.send(mb.error(err));
@@ -99,5 +99,6 @@ router.get('/consume/list/:memberId', (req, res) => {
        res.send(mb.error(err));
    })
 });
+
 
 module.exports = router;
