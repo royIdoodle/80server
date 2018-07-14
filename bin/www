@@ -7,6 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('80server:server');
 var http = require('http');
+let retry = 0;
 const mongoose = require('mongoose');
 let config = require('../config/mongo_config');
 const {path, dbAccount} = config;
@@ -34,9 +35,12 @@ server.on('listening', onListening);
 
 function initDB() {
     console.log('>>> init mongoDB connection');
-    mongoose.connect(`${path}${dbAccount}`).catch(err=>{
+    mongoose.connect(`${path}${dbAccount}`).then(()=>{
+        console.log('>>> mongoDB connect success!');
+    }).catch(err=>{
+        console.log(`--- retry:${++retry}`);
         setTimeout(initDB, 5000);
-    });
+    })
 }
 initDB();
 /**

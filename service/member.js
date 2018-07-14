@@ -2,7 +2,13 @@ let config = require('../config/mongo_config');
 const mongoose = require('mongoose');
 const {path, dbAccount} = config;
 const ConsumeService = require('./consume');
-mongoose.connect(`${path}${dbAccount}`);
+//
+// function initDB(){
+//
+// }
+// mongoose.connect(`${path}${dbAccount}`).catch(err=>{
+//     console.error('member connect ')
+// });
 
 const Model = {
     // memberId: Number,       //会员ID
