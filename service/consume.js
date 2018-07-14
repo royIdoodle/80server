@@ -24,6 +24,11 @@ const Model = {
         type: String,
         default: 'haircut',  //haircut: 理发；perm：烫发；shopping：购买；recharge：充值
     },
+    //消费内容记录
+    content: {
+        type: String,
+        default: ''
+    },
     //消费值
     count: {
         type: Number,
@@ -37,7 +42,8 @@ const TYPE = {
     HAIR_CUT: 'haircut',
     PERM: 'perm',
     SHOPPING: 'shopping',
-    RECHARGE: 'recharge'
+    RECHARGE: 'recharge',
+    OTHER: 'other'
 };
 
 /**

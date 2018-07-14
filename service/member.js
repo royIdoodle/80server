@@ -25,10 +25,6 @@ const Model = {
         type: Number,
         default: 0
     },    //进店次数
-    consumeCount: {         //消费次数
-        type: Number,
-        default: 0
-    },
     balance: {
         type: Number,
         default: 0
@@ -111,6 +107,7 @@ function recharge({id, number, shopId, type = 'balance'}) {
         })
     }
 }
+
 
 module.exports = {
     add: addMember,
