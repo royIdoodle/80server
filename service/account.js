@@ -1,7 +1,7 @@
 let config = require('../config/mongo_config');
 const mongoose = require('mongoose');
 const {path, dbAccount} = config;
-mongoose.connect(`${path}${dbAccount}`);
+// mongoose.connect(`${path}${dbAccount}`);
 
 
 const Shop = mongoose.model('account', { name: String , createTime: Date});
