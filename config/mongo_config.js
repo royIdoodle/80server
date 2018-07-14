@@ -1,4 +1,4 @@
-const path = 'mongodb://localhost/';
+const path = 'mongodb://0.0.0.0/';
 const dbAccount = 'meifa';
 const dbMember = 'member';
 
