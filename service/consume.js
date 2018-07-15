@@ -78,10 +78,7 @@ function getConsumeList({memberId}) {
  * @param type
  */
 function recharge({id, number, shopId, type = 'balance'}) {
-    return addConsume({memberId: id, count: number, shopId, type: TYPE.RECHARGE}).then((err) => {
-        console.log(err)
-        return MemberService.modifyBalance({id, balance: number})
-    })
+    return addConsume({memberId: id, count: number, shopId, type: TYPE.RECHARGE})
 }
 
 module.exports = {
