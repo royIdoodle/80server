@@ -1,8 +1,6 @@
-let config = require('../config/mongo_config');
 const mongoose = require('mongoose');
-const {path, dbAccount} = config;
+const MemberService = require('./member');
 
-// mongoose.connect(`${path}${dbAccount}`);
 
 const Model = {
     //会员ID
@@ -63,8 +61,24 @@ function getConsumeList({memberId}) {
     return Consume.find({memberId}).sort({time: -1})
 }
 
+
+/**
+ *
+ * @param id
+ * @param number
+ * @param shopId
+ * @param type
+ */
+function recharge({id, number, shopId, type = 'balance'}) {
+    return addConsume({memberId: id, count: number, shopId, type: TYPE.RECHARGE}).then((err) => {
+        console.log(err)
+        return MemberService.modifyBalance({id, balance: number})
+    })
+}
+
 module.exports = {
     TYPE,
     add: addConsume,
-    list: getConsumeList
+    list: getConsumeList,
+    recharge
 };

@@ -74,7 +74,7 @@ router.get('/member/get/:id', (req, res, next) => {
 router.post('/member/recharge/:id', (req, res) => {
     const {id} = req.params,
         {number, shopId = 1} = req.query;
-    member.recharge({id, number, shopId}).then(info => {
+    consume.recharge({id, number, shopId}).then(info => {
         res.send(mb.success(info));
     }).catch(err => {
         res.send(mb.error(err));

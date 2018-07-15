@@ -1,14 +1,5 @@
-let config = require('../config/mongo_config');
 const mongoose = require('mongoose');
-const {path, dbAccount} = config;
-const ConsumeService = require('./consume');
-//
-// function initDB(){
-//
-// }
-// mongoose.connect(`${path}${dbAccount}`).catch(err=>{
-//     console.error('member connect ')
-// });
+
 
 const Model = {
     // memberId: Number,       //会员ID
@@ -94,24 +85,13 @@ function getMemberList({page = 0, count = 10}) {
 }
 
 /**
- * 给用户充值
+ * 充值
  * @param id
- * @param number
- * @param shopId
- * @param type
+ * @param balance
  * @returns {void|Query}
  */
-function recharge({id, number, shopId, type = 'balance'}) {
-    if(type === 'balance') {
-        //更新余额
-        return Member.findOneAndUpdate({_id: id}, { $inc: {balance: Math.abs(number)}}).then(() => {
-            //添加一个交易记录
-            return ConsumeService.add({
-                memberId: id, shopId, count: number,
-                type: ConsumeService.TYPE.RECHARGE
-            })
-        })
-    }
+function modifyBalance({id, balance}){
+    return Member.findOneAndUpdate({_id: id}, { $inc: {balance: balance}})
 }
 
 
@@ -121,5 +101,6 @@ module.exports = {
     edit: editMember,
     find: findMember,
     list: getMemberList,
-    recharge: recharge
+    modifyBalance
+    // recharge: recharge
 };
