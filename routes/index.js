@@ -6,26 +6,26 @@ let account = require('../service/account'),
 let mb = require('../lib/messageBox');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   res.render('index', { title: 'Express' });
 });
 
 
-router.get('/save', function (req, res, next) {
+router.get('/save', function (req, res) {
     account.save().then(() => {
         res.send(mb.success('saved'));
     });
 
 });
 
-router.get('/find', function (req, res, next) {
+router.get('/find', function (req, res) {
     account.find().then(result => {
         res.send(mb.success(result));
     });
 
 });
 
-router.post('/member/add', (req, res, next) => {
+router.post('/member/add', (req, res) => {
     member.add(req.query).then(result => {
         res.send(mb.success(result));
     }).catch(err => {
@@ -34,7 +34,7 @@ router.post('/member/add', (req, res, next) => {
 });
 
 //获取会员列表
-router.get('/member/list/:page/:count', (req, res, next) => {
+router.get('/member/list/:page/:count', (req, res) => {
     member.list(req.params).then(list => {
         res.send(mb.success(list));
     }).catch(err => {
@@ -43,7 +43,7 @@ router.get('/member/list/:page/:count', (req, res, next) => {
 });
 
 // 删除指定会员
-router.post('/member/remove', (req, res, next) => {
+router.post('/member/remove', (req, res) => {
     const {phone} = req.query;
     member.remove({phone}).then(list => {
         res.send(mb.success(list));
@@ -53,7 +53,7 @@ router.post('/member/remove', (req, res, next) => {
 });
 
 // 修改指定会员信息
-router.post('/member/edit/:id', (req, res, next) => {
+router.post('/member/edit/:id', (req, res) => {
     const {id} = req.params;
     member.edit(id, req.query).then(result => {
         res.send(mb.success(result));
@@ -62,7 +62,7 @@ router.post('/member/edit/:id', (req, res, next) => {
     })
 });
 
-router.get('/member/get/:id', (req, res, next) => {
+router.get('/member/get/:id', (req, res) => {
     const {id} = req.params;
     member.find(id).then(info => {
         res.send(mb.success(info));

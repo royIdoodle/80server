@@ -102,5 +102,4 @@ module.exports = {
     find: findMember,
     list: getMemberList,
     modifyBalance
-    // recharge: recharge
 };

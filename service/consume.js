@@ -54,7 +54,15 @@ const TYPE = {
  */
 function addConsume({memberId, shopId, type, count}) {
     const thisConsume = new Consume({memberId, shopId, type, count});
-    return thisConsume.save();
+    return thisConsume.save().then(() => {
+        let balance = 0;
+        if(type !== TYPE.RECHARGE){
+            balance = -1 * count;
+        }else {
+            balance = count;
+        }
+        return MemberService.modifyBalance({id: memberId, balance})
+    })
 }
 
 function getConsumeList({memberId}) {
