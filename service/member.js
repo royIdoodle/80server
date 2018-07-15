@@ -4,7 +4,14 @@ const mongoose = require('mongoose');
 const Model = {
     // memberId: Number,       //会员ID
     name: String,
-    createTime: Date,
+    createTime: {
+        type: Date,
+        default: Date.now()
+    },
+    modifyTime: {
+        type: Date,
+        default: Date.now()
+    },
     phone: String,
     sex: {
         type: String,
@@ -66,7 +73,7 @@ function deleteMember(query) {
  * @returns {Query}
  */
 function editMember(id, query) {
-    return Member.updateOne({_id: id}, query);
+    return Member.updateOne({_id: id}, Object.assign(query, {modifyTime: Date.now()}));
 }
 
 
@@ -81,7 +88,10 @@ function findMember(id) {
  */
 function getMemberList({page = 0, count = 10}) {
     const skipCount = page * count;
-    return Member.find().skip(skipCount).limit(Number(count));
+    return Member.find()
+        .sort({modifyTime: -1})
+        .skip(skipCount)
+        .limit(Number(count));
 }
 
 /**
