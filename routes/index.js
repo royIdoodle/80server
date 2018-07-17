@@ -25,62 +25,6 @@ router.get('/find', function (req, res) {
 
 });
 
-router.post('/member/add', (req, res) => {
-    member.add(req.query).then(result => {
-        res.send(mb.success(result));
-    }).catch(err => {
-        res.send(mb.error(err));
-    })
-});
-
-//获取会员列表
-router.get('/member/list/:page/:count', (req, res) => {
-    member.list(req.params).then(list => {
-        res.send(mb.success(list));
-    }).catch(err => {
-        res.send(mb.error(err));
-    })
-});
-
-// 删除指定会员
-router.post('/member/remove', (req, res) => {
-    const {phone} = req.query;
-    member.remove({phone}).then(list => {
-        res.send(mb.success(list));
-    }).catch(err => {
-        res.send(mb.error(err));
-    })
-});
-
-// 修改指定会员信息
-router.post('/member/edit/:id', (req, res) => {
-    const {id} = req.params;
-    member.edit(id, req.query).then(result => {
-        res.send(mb.success(result));
-    }).catch(err => {
-        res.send(mb.error(err));
-    })
-});
-
-router.get('/member/get/:id', (req, res) => {
-    const {id} = req.params;
-    member.find(id).then(info => {
-        res.send(mb.success(info));
-    }).catch(err => {
-        res.send(mb.error(err));
-    })
-});
-
-router.post('/member/recharge/:id', (req, res) => {
-    const {id} = req.params,
-        {number, shopId = 1} = req.query;
-    consume.recharge({id, number, shopId}).then(info => {
-        res.send(mb.success(info));
-    }).catch(err => {
-        res.send(mb.error(err));
-    })
-});
-
 router.post('/consume/add/:shopId/:memberId', (req, res) => {
     const {shopId, memberId} = req.params;
     const {type, count} = req.query;
