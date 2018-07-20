@@ -13,8 +13,7 @@ let config = require('../config/mongo_config');
 const {path, dbAccount} = config;
 const options = {
     auto_reconnect: true,
-    poolSize: 10,
-    useMongoClient: true
+    poolSize: 10
 };
 
 /**
@@ -43,7 +42,7 @@ function initDB() {
     mongoose.connect(`${path}${dbAccount}`,options).then(()=>{
         console.log('>>> mongoDB connect success!');
     }).catch(err=>{
-        console.log(`--- retry:${++retry}`);
+        console.log(`--- retry:${++retry}`, {err});
         setTimeout(initDB, 5000);
     })
 }
