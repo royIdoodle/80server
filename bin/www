@@ -12,8 +12,9 @@ const mongoose = require('mongoose');
 let config = require('../config/mongo_config');
 const {path, dbAccount} = config;
 const options = {
-    server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } },
-    replset: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } }
+    auto_reconnect: true,
+    poolSize: 10,
+    useMongoClient: true
 };
 
 /**
