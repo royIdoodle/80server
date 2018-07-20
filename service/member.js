@@ -17,6 +17,7 @@ const Model = {
         type: String,
         default: 'male'
     },
+    cardNo: String,
     age: Number,
     birthday: Date,         //生日
     tags: Array,            //用户标签
@@ -44,12 +45,12 @@ const Member = mongoose.model('member', Model);
  */
 function addMember(info = {}) {
     info.createTime = Date.now();
-    if (!info.phone) {
-        throw ('没有电话号 phone');
+    if (!info.phone && !info.cardNo) {
+        throw ('没有电话号或卡号');
     } else {
-        return Member.findOne({phone: info.phone}).then(result => {
+        return Member.findOne({$or: [{phone: info.phone}, {cardNo: info.cardNo}]}).then(result => {
             if (result) {
-                throw '电话号码已存在！'
+                throw '已经存在相同的会员！';
             } else {
                 const thisMember = new Member(info);
                 return thisMember.save();
