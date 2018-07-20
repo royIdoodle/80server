@@ -4,7 +4,7 @@ const consume = require('../service/consume');
 const mb = require('../lib/messageBox');
 
 //添加消费记录
-router.post('/consume/add/:shopId/:memberId', (req, res) => {
+router.post('/add/:shopId/:memberId', (req, res) => {
     const {shopId, memberId} = req.params;
     const {type, count} = req.query;
     consume.add({shopId, memberId, type, count}).then(info => {
@@ -15,7 +15,7 @@ router.post('/consume/add/:shopId/:memberId', (req, res) => {
 });
 
 //获取消费记录
-router.get('/consume/list/:memberId', (req, res) => {
+router.get('/list/:memberId', (req, res) => {
    const {memberId} = req.params;
    consume.list({memberId}).then(info => {
        res.send(mb.success(info));
