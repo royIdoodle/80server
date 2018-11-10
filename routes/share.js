@@ -34,14 +34,33 @@ router.get('/settings/:id', (req, res) => {
 //获取会员信息
 router.get('/get/:id', (req, res) => {
   const {id} = req.params;
-  share.get(id).then(result => {
-    res.send(mb.success(result))
-  })
+  let _callback = req.query.callback;
+  if (_callback) {
+    share.get(id).then(result => {
+      res.type('text/javascript');
+      res.send(_callback + '(' + JSON.stringify(mb.success(result)) + ')');
+    })
+  } else {
+    share.get(id).then(result => {
+      res.send(mb.success(result))
+    })
+  }
 });
 
 
 router.post('/add', (req, res) => {
-  share.add(req.query).then(result => {
+  console.log('============')
+  console.log(req.query, req.body)
+  console.log('============')
+  let settings = {}
+  if (req.query.settings) {
+    settings = req.query
+  } else if (req.body.settings){
+    settings = req.body
+  } else {
+    res.send(mb.error('no settings'));
+  }
+  share.add(settings).then(result => {
     res.send(mb.success(result));
   }).catch(err => {
     res.send(mb.error(err));
@@ -50,7 +69,15 @@ router.post('/add', (req, res) => {
 
 router.post('/update/:id', (req, res) => {
   const {id} = req.params;
-  share.update(id, req.query).then(result => {
+  let settings = {}
+  if (req.query.settings) {
+    settings = req.query
+  } else if (req.body.settings){
+    settings = req.body
+  } else {
+    res.send(mb.error('no settings'));
+  }
+  share.update(id, settings).then(result => {
     res.send(mb.success(result));
   }).catch(err => {
     res.send(mb.error(err));
